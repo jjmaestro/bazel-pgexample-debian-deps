@@ -1,0 +1,7 @@
+# /* vim: set filetype=sh : */
+
+common --show_timestamps
+common --progress_in_terminal_title
+common --experimental_ui_max_stdouterr_bytes=52428800
+
+build --incompatible_strict_action_env

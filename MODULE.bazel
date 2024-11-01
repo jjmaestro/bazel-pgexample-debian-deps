@@ -1,0 +1,5 @@
+module(
+    name = "rules_foreign_cc-pg_example",
+    version = "0.0.1",
+    bazel_compatibility = [">=7.3.1"],
+)

@@ -1,0 +1,2 @@
+.bazelrc* linguist-language=Shell
+*.MODULE.bazel linguist-language=Starlark
