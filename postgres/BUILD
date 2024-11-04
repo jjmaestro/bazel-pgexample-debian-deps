@@ -4,7 +4,7 @@ load("@rules_foreign_cc//foreign_cc:defs.bzl", "meson")
 # Meson logs: bazel-out/*-fastbuild/bin/postgres/postgres_foreign_cc/Meson.log
 
 meson(
-    name = "postgres",
+    name = "meson",
     build_data = [
         "@m4//bin:m4",
         "@flex//bin:flex",
@@ -54,10 +54,7 @@ meson(
         "pg_config",
         "pg_isready",
     ],
-    # NOTE: including lib in out_data_dirs because even when it's
-    # out_lib_dir's default, it's not included in declared_outputs
     out_data_dirs = [
-        "lib",
         "share",
     ],
     setup_args = [
@@ -69,4 +66,10 @@ meson(
         "@rules_flex//flex:current_flex_toolchain",
         "@rules_bison//bison:current_bison_toolchain",
     ],
+)
+
+filegroup(
+    name = "postgres",
+    srcs = [":meson"],
+    output_group = "gen_dir",
 )
