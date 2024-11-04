@@ -1,0 +1,15 @@
+diff --git a/src/tools/pgflex b/src/tools/pgflex
+index baabe2d..0af770a 100755
+--- a/src/tools/pgflex
++++ b/src/tools/pgflex
+@@ -51,7 +51,9 @@ os.chdir(args.privatedir)
+ # contents. Set FLEX_TMP_DIR to the target private directory to avoid
+ # that. That environment variable isn't consulted on other platforms, so we
+ # don't even need to make this conditional.
+-env = {'FLEX_TMP_DIR': args.privatedir}
++#
++# Also, allow overriding m4 (flex honors the M4 environment variable if set).
++env = {'FLEX_TMP_DIR': args.privatedir, 'M4': os.environ.get('M4', '')}
+ 
+ # build flex invocation
+ command = [args.flex, '-o', args.output_file]

@@ -1,0 +1,21 @@
+"""Postgres"""
+
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+PGSRC_BUILD_FILE = """
+filegroup(
+    name = "src",
+    srcs = glob(["**"]),
+    visibility = ["//visibility:public"],
+)
+"""
+
+http_archive(
+    name = "postgres_16.4",
+    build_file_content = PGSRC_BUILD_FILE,
+    patch_args = ["-p1"],
+    patches = ["//postgres:pgflex_env_m4.diff"],
+    sha256 = "ec7a01752aa6484fd477ef0fce4725a4cf1eddeb3df8f27891e3364bd2a8ea99",
+    strip_prefix = "postgres-REL_16_4",
+    url = "https://github.com/postgres/postgres/archive/refs/tags/REL_16_4.tar.gz",
+)

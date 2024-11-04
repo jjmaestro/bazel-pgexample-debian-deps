@@ -1,0 +1,46 @@
+"""TODO: toolchain module docstring"""
+
+bazel_dep(name = "rules_python", version = "0.36.0")
+bazel_dep(name = "rules_perl", version = "0.2.3.bcr.1")
+bazel_dep(name = "rules_m4", version = "0.2.3")
+bazel_dep(name = "rules_flex", version = "0.2.1")
+bazel_dep(name = "rules_bison", version = "0.3")
+
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+python.toolchain(
+    # NOTE: https://github.com/bazelbuild/rules_python/pull/713
+    ignore_root_user_error = True,
+    python_version = "3.12",
+)
+use_repo(python, "python_3_12")
+
+perl = use_extension("@rules_perl//perl:extensions.bzl", "perl_repositories")
+use_repo(
+    perl,
+    "perl_linux_amd64",
+    "perl_linux_arm64",
+)
+
+m4 = use_extension("@rules_m4//m4/extensions:m4_repository_ext.bzl", "m4_repository_ext")
+m4.repository(
+    name = "m4",
+    version = "1.4.18",
+)
+use_repo(m4, "m4")
+
+flex = use_extension("@rules_flex//flex/extensions:flex_repository_ext.bzl", "flex_repository_ext")
+flex.repository(
+    name = "flex",
+    version = "2.6.4",
+)
+use_repo(flex, "flex")
+
+bison = use_extension(
+    "@rules_bison//bison/extensions:bison_repository_ext.bzl",
+    "bison_repository_ext",
+)
+bison.repository(
+    name = "bison",
+    version = "3.3.2",
+)
+use_repo(bison, "bison")
