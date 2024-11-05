@@ -28,3 +28,29 @@ use_repo(bazel_lib_toolchains, "bsd_tar_darwin_amd64")
 use_repo(bazel_lib_toolchains, "bsd_tar_darwin_arm64")
 use_repo(bazel_lib_toolchains, "bsd_tar_linux_amd64")
 use_repo(bazel_lib_toolchains, "bsd_tar_linux_arm64")
+
+deb = use_extension("//debian:extension.bzl", "deb")
+deb.pkg(
+    name = "libssl_3.4.0_amd64",
+    sha256 = "de5fcb20559a0b9f0812f7b6b8c79ae4c462fc1b0ac12719433401f0d43a84ad",
+    url = "https://snapshot.debian.org/archive/debian/20241103T211723Z/pool/main/o/openssl/libssl-dev_3.4.0-1_amd64.deb",
+)
+use_repo(deb, "libssl_3.4.0_amd64")
+deb.pkg(
+    name = "libssl_3.4.0_arm64",
+    sha256 = "a27da4370ec3a342de6971852b4e5df48ca2cd2480fea2e058a5fc3c6effff24",
+    url = "https://snapshot.debian.org/archive/debian/20241103T211723Z/pool/main/o/openssl/libssl-dev_3.4.0-1_arm64.deb",
+)
+use_repo(deb, "libssl_3.4.0_arm64")
+deb.pkg(
+    name = "libssl3_3.1.5_amd64",
+    sha256 = "57faabf7795d466ee9d7bb74a2a19861ed18e7fe396e96c1f7b32a363ab4bc6c",
+    url = "https://snapshot.debian.org/archive/debian/20240210T223313Z/pool/main/o/openssl/libssl3_3.1.5-1_amd64.deb",
+)
+use_repo(deb, "libssl3_3.1.5_amd64")
+deb.pkg(
+    name = "libssl3_3.1.5_arm64",
+    sha256 = "8b5f27f4a21da44d7c19ab227d18f602e5593d173c8e9434cfa3c4c123195844",
+    url = "https://snapshot.debian.org/archive/debian/20240210T223313Z/pool/main/o/openssl/libssl3_3.1.5-1_arm64.deb",
+)
+use_repo(deb, "libssl3_3.1.5_arm64")
