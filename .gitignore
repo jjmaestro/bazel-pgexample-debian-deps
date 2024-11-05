@@ -1,3 +1,4 @@
 /bazel-[a-z]*
 /MODULE.bazel.lock
 /.logs
+/docker/.*

@@ -20,3 +20,11 @@ repos:
         - --warnings=all
     - id: buildifier-lint
       args: *args
+- repo: https://github.com/mrtazz/checkmake.git
+  rev: 0.2.2
+  hooks:
+    - id: checkmake
+- repo: https://github.com/hadolint/hadolint
+  rev: v2.12.0
+  hooks:
+    - id: hadolint
