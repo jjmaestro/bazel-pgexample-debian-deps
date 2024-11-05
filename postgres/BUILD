@@ -71,6 +71,26 @@ meson(
         # bazel-contrib/rules_foreign_cc/blob/0.12.0/foreign_cc/private/runnable_binary_wrapper.sh
         # we can force-set the RUNFILES_DIR
         "RUNFILES_DIR": "$(execpath @bison//bin:bison).runfiles/",
+
+        # trying to get dependencies to work...
+        #"CFLAGS": " ".join([
+        #    "$${CFLAGS:-}",
+        #    "-I$$EXT_BUILD_DEPS/include",
+        #    "-I$$EXT_BUILD_DEPS/include/aarch64-linux-gnu",
+        #]),
+        #"LDFLAGS": " ".join([
+        #    "$${LDFLAGS:-}",
+        # this is weird, when I use the hardcoded sandbox path it works
+        # "more" than when I use the non-sandbox one o.0 and I know for a
+        # fact that the sandboxed path "is missing" stuff (broken symlinks)
+        #"-L/root/.cache/bazel/_bazel_root/a08c2e4811c846650b733c6fc815a920/sandbox/processwrapper-sandbox/400/execroot/_main/external/_main~deb~libssl3_3.1.5_arm64/files/usr/lib/aarch64-linux-gnu",
+        #"-L/root/.cache/bazel/_bazel_root/a08c2e4811c846650b733c6fc815a920/sandbox/processwrapper-sandbox/400/execroot/_main/external/_main~deb~libssl_3.4.0_arm64/files/usr/lib/aarch64-linux-gnu",
+        #"-L/root/.cache/bazel/_bazel_root/a08c2e4811c846650b733c6fc815a920/execroot/_main/external/_main~deb~libssl3_3.1.5_arm64/files/usr/lib/aarch64-linux-gnu",
+        #"-L/root/.cache/bazel/_bazel_root/a08c2e4811c846650b733c6fc815a920/execroot/_main/external/_main~deb~libssl_3.4.0_arm64/files/usr/lib/aarch64-linux-gnu",
+        #"""$$(echo $(locations @libssl_3.4.0_arm64//:files) | tr ' ' '\n' | grep '\\.so' | xargs dirname | sort | uniq | xargs -I% echo "-L$$EXT_BUILD_ROOT/%@" | xargs | tr -d "@")""",
+        #"""$$(echo $(locations @libssl3_3.1.5_arm64//:files) | tr ' ' '\n' | grep '\\.so' | xargs dirname | sort | uniq | xargs -I% echo "-L$$EXT_BUILD_ROOT/%@" | xargs | tr -d "@")""",
+        #"-L/tmp/foo",
+        #]),
     },
     lib_source = "@postgres_16.4//:src",
     options = {
