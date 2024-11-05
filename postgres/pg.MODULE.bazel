@@ -19,3 +19,12 @@ http_archive(
     strip_prefix = "postgres-REL_16_4",
     url = "https://github.com/postgres/postgres/archive/refs/tags/REL_16_4.tar.gz",
 )
+
+bazel_dep(name = "aspect_bazel_lib", version = "2.7.9")
+
+bazel_lib_toolchains = use_extension("@aspect_bazel_lib//lib:extensions.bzl", "toolchains")
+use_repo(bazel_lib_toolchains, "bsd_tar_toolchains")
+use_repo(bazel_lib_toolchains, "bsd_tar_darwin_amd64")
+use_repo(bazel_lib_toolchains, "bsd_tar_darwin_arm64")
+use_repo(bazel_lib_toolchains, "bsd_tar_linux_amd64")
+use_repo(bazel_lib_toolchains, "bsd_tar_linux_arm64")
