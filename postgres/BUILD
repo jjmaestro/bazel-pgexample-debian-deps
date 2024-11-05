@@ -1,4 +1,32 @@
 load("@rules_foreign_cc//foreign_cc:defs.bzl", "meson")
+load("//debian:ccinfo.bzl", "gen_ccinfo_from_deb")
+
+CPU_ARCH = {
+    "arm64": "arm64",
+    "x86_64": "amd64",
+}
+
+DEPZ = [
+    "libssl3_3.1.5",
+    "libssl_3.4.0",
+]
+
+[
+    gen_ccinfo_from_deb(
+        name = "ccinfo_{}_{}".format(p, arch),
+        dep = "@{}_{}//:files".format(p, arch),
+    )
+    for p in DEPZ
+    for arch in CPU_ARCH.values()
+]
+
+DEPS = select({
+    "@platforms//cpu:{}".format(cpu): [
+        "ccinfo_{}_{}".format(p, arch)
+        for p in DEPZ
+    ]
+    for cpu, arch in CPU_ARCH.items()
+})
 
 # NOTE:
 # Meson logs: bazel-out/*-fastbuild/bin/postgres/postgres_foreign_cc/Meson.log
@@ -10,7 +38,7 @@ meson(
         "@flex//bin:flex",
         "@bison//bin:bison",
         "@python_3_12//:python3",
-    ],
+    ] + DEPS,
     env = {
         # NOTE:
         # The flex binary from rules_flex doesn't have a macro processor
@@ -47,6 +75,7 @@ meson(
     lib_source = "@postgres_16.4//:src",
     options = {
         "rpath": "false",
+        "ssl": "openssl",
     },
     out_binaries = [
         "initdb",
@@ -66,6 +95,7 @@ meson(
         "@rules_flex//flex:current_flex_toolchain",
         "@rules_bison//bison:current_bison_toolchain",
     ],
+    deps = DEPS,
 )
 
 filegroup(
